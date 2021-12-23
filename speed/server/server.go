@@ -1,13 +1,23 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"net"
 	"time"
 )
 
+var (
+	port = flag.String("port", "49152", "listen port")
+)
+
 func main() {
-	l, err := net.Listen("tcp", ":49152")
+	flag.Parse()
+	addr := fmt.Sprintf(":%s", *port)
+	log.Printf("listen on %s\n", addr)
+
+	l, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalln(err)
 	}

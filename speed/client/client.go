@@ -1,17 +1,27 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net"
 	"time"
 )
 
+var (
+	addr = flag.String("addr", "", "remote addr")
+)
+
 func main() {
+	flag.Parse()
+	if *addr == "" {
+		log.Fatalln("addr empty")
+	}
+
 	buf := make([]byte, 1024)
 
 	t1 := time.Now()
 
-	c, err := net.Dial("tcp", ":49152")
+	c, err := net.Dial("tcp", *addr)
 	if err != nil {
 		log.Fatalln(err)
 	}
